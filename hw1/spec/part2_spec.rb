@@ -23,8 +23,53 @@ describe Part2, "#rps_game_winner" do
     game = [ [ "Armando", "P" ], [ "Dave", "S" ] ]
     part2.rps_game_winner(game).should eq([ "Dave", "S" ])
   end
+  it "returns Armando for [ [ \"Armando\", \"S\" ], [ \"Dave\", \"P\" ] ]" do
+    game = [ [ "Armando", "S" ], [ "Dave", "P" ] ]
+    part2.rps_game_winner(game).should eq([ "Armando", "S" ])
+  end
   it "returns Armando for [ [ \"Armando\", \"S\" ], [ \"Dave\", \"S\" ] ]" do
     game = [ [ "Armando", "S" ], [ "Dave", "S" ] ]
     part2.rps_game_winner(game).should eq([ "Armando", "S" ])
+  end
+
+  it "throws WrongNumberOfPlayersError for incorrect number of players" do
+    lambda { 
+      part2.rps_game_winner([]) 
+    }.should raise_error(WrongNumberOfPlayersError)
+    lambda { 
+      part2.rps_game_winner([["Dave","S"]]) 
+    }.should raise_error(WrongNumberOfPlayersError)
+    lambda { 
+      part2.rps_game_winner([["Dave","R"],["Jim","P"],["Stan","S"]]) 
+    }.should raise_error(WrongNumberOfPlayersError)
+  end
+  it "throws NoSuchStrategyError for incorrect strategy" do
+    lambda { 
+      part2.rps_game_winner([["Bill","A"],["Fred","R"]]) 
+    }.should raise_error(NoSuchStrategyError)
+    lambda { 
+      part2.rps_game_winner([["Bill","A"],["Fred","R"]]) 
+    }.should raise_error(NoSuchStrategyError)
+    lambda { 
+      part2.rps_game_winner([["Bill","A"],["Fred","B"]]) 
+    }.should raise_error(NoSuchStrategyError)
+  end
+end
+
+describe Part2, "#rps_game_winner" do
+  part2 = Part2.new
+  it "returns Dave for this tournament" do
+    tournament = 
+    [
+      [
+        [ ["Armando", "P"], ["Dave", "S"] ],
+        [ ["Richard", "R"],  ["Michael", "S"] ],
+      ],
+      [ 
+        [ ["Allen", "S"], ["Omer", "P"] ],
+        [ ["David E.", "R"], ["Richard X.", "P"] ]
+      ]
+    ]
+    part2.rps_tournament_winner(tournament).should eq(["Richard","R"])
   end
 end
