@@ -7,7 +7,7 @@ end
 def count_words(string)
   h = Hash.new(0)
   string.downcase.scan(/\w+/).each do |word|
-    h[word.to_sym] += 1
+    h[word] += 1
   end
   return h
 end
