@@ -7,19 +7,10 @@ def rps_game_winner(game)
   raise WrongNumberOfPlayersError unless game.length == 2
   raise NoSuchStrategyError unless pieces.include?(game[0][1])
   raise NoSuchStrategyError unless pieces.include?(game[1][1])
-  return game[0] if game[0][1] == game[1][1]
-  first  = pieces.index(game[0][1])
+  pieces.rotate!(pieces.index(game[0][1]))
   second = pieces.index(game[1][1])
-  if (first + second == 2 && second == 2) 
-    return game[0]
-  elsif (first + second == 2)
-    return game[1]
-  end
-  if first > second
-    return game[0]
-  else
-    return game[1]
-  end 
+  return game[0] if game[0][1] == game[1][1] || second == 2
+  return game[1]
 end
 
 def rps_tournament_winner(game)
